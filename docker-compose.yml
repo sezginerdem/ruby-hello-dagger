@@ -27,7 +27,7 @@ services:
       CONCOURSE_POSTGRES_USER: concourse
       CONCOURSE_POSTGRES_PASSWORD: changeme
       CONCOURSE_POSTGRES_DATABASE: concourse
-      CONCOURSE_EXTERNAL_URL: http://localhost:8080
+      CONCOURSE_EXTERNAL_URL: http://54.171.195.95:8080
       CONCOURSE_ADD_LOCAL_USER: test:test
       CONCOURSE_MAIN_TEAM_LOCAL_USER: test
       CONCOURSE_TSA_HOST_KEY: /concourse-keys/tsa_host_key
