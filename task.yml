@@ -1,0 +1,32 @@
+resources:
+  - name: ruby-app-repo
+    type: git
+    source:
+      uri: https://github.com/YOUR_USERNAME/ruby-hello-dagger.git
+      branch: main
+
+jobs:
+  - name: build-and-run-dagger
+    public: true
+    plan:
+      - get: ruby-app-repo
+        trigger: true
+
+      - task: run-dagger-pipeline
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: python
+              tag: "3.10-alpine"
+          inputs:
+            - name: ruby-app-repo
+          run:
+            path: sh
+            args:
+              - -exc
+              - |
+                pip install dagger-io
+                cd ruby-app-repo
+                python dagger_build.py
