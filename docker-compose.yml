@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   concourse-db:
     image: postgres
@@ -33,9 +35,7 @@ services:
       CONCOURSE_SESSION_SIGNING_KEY: /concourse-keys/session_signing_key
       CONCOURSE_WORKER_KEY: /concourse-keys/worker_key
     volumes:
-      - ./keys:/concourse-keys
-      - .:/app
-    working_dir: /app
+      - ./concourse-keys:/concourse-keys
 
   concourse-worker:
     image: concourse/concourse
@@ -50,8 +50,6 @@ services:
       CONCOURSE_WORKER_PRIVATE_KEY: /concourse-keys/worker_key
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./keys:/concourse-keys
+      - ./concourse-keys:/concourse-keys
     security_opt:
       - seccomp=unconfined
-    extra_hosts:
-      - "concourse-web:172.18.0.3"
