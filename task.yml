@@ -2,7 +2,7 @@ resources:
   - name: ruby-app-repo
     type: git
     source:
-      uri: https://github.com/YOUR_USERNAME/ruby-hello-dagger.git
+      uri: https://github.com/sezginerdem/ruby-hello-dagger.git
       branch: main
 
 jobs:
