@@ -41,6 +41,7 @@ services:
     image: concourse/concourse
     platform: linux/amd64
     privileged: true
+    network_mode: host 
     depends_on:
       - concourse-web
     command: worker
@@ -53,4 +54,7 @@ services:
       - ./concourse-keys:/concourse-keys
     security_opt:
       - seccomp=unconfined
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
