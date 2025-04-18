@@ -8,8 +8,8 @@ jobs:
           image_resource:
             type: registry-image
             source:
-              repository: python
-              tag: "3.10-slim"
+              repository: ubuntu
+              tag: "22.04"
           inputs:
             - name: ruby-app-repo
           run:
@@ -17,6 +17,8 @@ jobs:
             args:
               - -exc
               - |
-                pip install dagger-io
+                apt update
+                apt install -y python3 python3-pip curl gnupg
+                pip3 install dagger-io
                 cd ruby-app-repo
-                python dagger_build.py
+                python3 dagger_build.py
