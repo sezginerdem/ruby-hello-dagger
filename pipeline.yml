@@ -1,3 +1,9 @@
+resource_types:
+  - name: registry-image
+    type: registry-image
+    source:
+      repository: concourse/registry-image-resource
+
 jobs:
   - name: build-and-run-dagger
     public: true
@@ -17,8 +23,6 @@ jobs:
             args:
               - -exc
               - |
-                apt update
-                apt install -y python3 python3-pip curl gnupg
-                pip3 install dagger-io
+                pip install dagger-io
                 cd ruby-app-repo
-                python3 dagger_build.py
+                python dagger_build.py
