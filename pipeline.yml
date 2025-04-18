@@ -6,10 +6,10 @@ jobs:
         config:
           platform: linux
           image_resource:
-            type: docker-image
+            type: registry-image
             source:
               repository: python
-              tag: "3.10"
+              tag: "3.10-slim"
           inputs:
             - name: ruby-app-repo
           run:
