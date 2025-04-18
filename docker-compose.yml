@@ -53,6 +53,4 @@ services:
       - ./concourse-keys:/concourse-keys
     security_opt:
       - seccomp=unconfined
-    extra_hosts:
-      - "concourse-web:172.18.0.3"
 
