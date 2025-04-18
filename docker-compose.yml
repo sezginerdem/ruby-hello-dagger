@@ -3,11 +3,6 @@ services:
     image: postgres
     platform: linux/amd64
     restart: always
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "concourse"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     environment:
       POSTGRES_DB: concourse
       POSTGRES_USER: concourse
@@ -25,11 +20,6 @@ services:
     ports:
       - "8080:8080"
       - "2222:2222"
-    healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:8080"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     environment:
       CONCOURSE_POSTGRES_HOST: concourse-db
       CONCOURSE_POSTGRES_USER: concourse
@@ -46,13 +36,13 @@ services:
       - ./keys:/concourse-keys
       - .:/app
     working_dir: /app
+
   concourse-worker:
     image: concourse/concourse
     platform: linux/amd64
     privileged: true
     depends_on:
-      concourse-web:
-        condition: service_healthy
+      - concourse-web
     command: worker
     environment:
       CONCOURSE_TSA_HOST: concourse-web:2222

@@ -1,0 +1,25 @@
+web:
+  service:
+    type: NodePort
+    nodePort: 30080
+    tsaNodePort: 30222
+
+postgresql:
+  enabled: true
+  postgresqlUsername: concourse
+  postgresqlPassword: changeme
+  postgresqlDatabase: concourse
+
+worker:
+  enabled: true
+  replicas: 1
+  securityContext:
+    privileged: true
+
+concourse:
+  web:
+    externalUrl: http://localhost:30080
+    auth:
+      localUsers: "test:test"
+      mainTeam:
+        localUser: "test"
