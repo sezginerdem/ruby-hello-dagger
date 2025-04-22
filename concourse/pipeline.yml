@@ -4,6 +4,9 @@ resources:
     source:
       uri: https://github.com/sezginerdem/ruby-hello-dagger.git
       branch: main
+      git_config:
+        - name: safe.directory
+          value: /tmp/build/get
 
 jobs:
   - name: dagger-build
