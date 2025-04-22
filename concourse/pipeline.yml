@@ -9,22 +9,17 @@ resources:
           value: /tmp/build/get
 
 jobs:
-  - name: dagger-build
+  - name: run-dagger-task
     plan:
-      - get: my-repo
-      - task: dagger-task
+      - task: dagger-example
         config:
           platform: linux
           image_resource:
             type: registry-image
-            source: {repository: python, tag: "3.11"}
+            source: { repository: python, tag: "3.11" }
           inputs:
-            - name: my-repo
+            - name: dagger
           run:
-            path: sh
+            path: python
             args:
-              - -exc
-              - |
-                cd ruby-hello-dagger
-                pip install dagger-io==0.18.3
-                python dagger/dagger_build.py
+              - dagger/dagger_build.py
