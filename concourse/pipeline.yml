@@ -9,17 +9,22 @@ resources:
           value: /tmp/build/get
 
 jobs:
-  - name: run-dagger-task
+  - name: dagger-build
     plan:
-      - task: dagger-example
+      - get: ruby-hello-dagger
+      - task: dagger-task
         config:
           platform: linux
           image_resource:
             type: registry-image
-            source: { repository: python, tag: "3.11" }
+            source: {repository: golang, tag: "1.21"}
           inputs:
-            - name: dagger
+            - name: ruby-hello-dagger
           run:
-            path: python
+            path: sh
             args:
-              - dagger/dagger_build.py
+              - -exc
+              - |
+                cd ruby-hello-dagger/go-dagger-houdini
+                go mod tidy
+                go run main.go
