@@ -1,60 +1,30 @@
-version: "3.8"
+version: '3'
 
 services:
   concourse-db:
     image: postgres
-    platform: linux/amd64
-    restart: always
     environment:
       POSTGRES_DB: concourse
-      POSTGRES_USER: concourse
-      POSTGRES_PASSWORD: changeme
-    ports:
-      - "5432:5432"
+      POSTGRES_PASSWORD: concourse_pass
+      POSTGRES_USER: concourse_user
 
-  concourse-web:
-    image: concourse/concourse
-    platform: linux/amd64
-    restart: always
-    command: web
-    depends_on:
-      - concourse-db
+  concourse:
+    image: rdclda/concourse:7.9.1
+    platform: linux/arm64
+    command: quickstart
+    privileged: true
+    depends_on: [concourse-db]
     ports:
       - "8080:8080"
-      - "2222:2222"
     environment:
       CONCOURSE_POSTGRES_HOST: concourse-db
-      CONCOURSE_POSTGRES_USER: concourse
-      CONCOURSE_POSTGRES_PASSWORD: changeme
+      CONCOURSE_POSTGRES_USER: concourse_user
+      CONCOURSE_POSTGRES_PASSWORD: concourse_pass
       CONCOURSE_POSTGRES_DATABASE: concourse
-      CONCOURSE_EXTERNAL_URL: http://54.171.195.95:8080
+      CONCOURSE_EXTERNAL_URL: http://localhost:8080
       CONCOURSE_ADD_LOCAL_USER: test:test
       CONCOURSE_MAIN_TEAM_LOCAL_USER: test
-      CONCOURSE_TSA_HOST_KEY: /concourse-keys/tsa_host_key
-      CONCOURSE_TSA_AUTHORIZED_KEYS: /concourse-keys/worker_key.pub
-      CONCOURSE_SESSION_SIGNING_KEY: /concourse-keys/session_signing_key
-      CONCOURSE_WORKER_KEY: /concourse-keys/worker_key
-    volumes:
-      - ./concourse-keys:/concourse-keys
-
-  concourse-worker:
-    image: concourse/concourse
-    platform: linux/amd64
-    privileged: true
-    network_mode: host 
-    depends_on:
-      - concourse-web
-    command: worker
-    environment:
-      CONCOURSE_TSA_HOST: concourse-web:2222
-      CONCOURSE_TSA_PUBLIC_KEY: /concourse-keys/tsa_host_key.pub
-      CONCOURSE_WORKER_PRIVATE_KEY: /concourse-keys/worker_key
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./concourse-keys:/concourse-keys
-    security_opt:
-      - seccomp=unconfined
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
-
+      CONCOURSE_CLUSTER_NAME: tutorial
+      CONCOURSE_WORKER_RUNTIME: houdini
+      CONCOURSE_BAGGAGECLAIM_CLEANUP_INTERVAL: 1m
+      CONCOURSE_BAGGAGECLAIM_MAX_VOLUMES: 100

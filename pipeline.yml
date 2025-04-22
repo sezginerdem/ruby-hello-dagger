@@ -3,26 +3,37 @@ resources:
     type: git
     source:
       uri: https://github.com/sezginerdem/ruby-hello-dagger.git
+      git_config:
+        - name: safe.directory
+          value: /tmp/build/get
+
 jobs:
-  - name: build-and-run-dagger
-    public: true
+  - name: build-and-run-dagger-dind
     plan:
       - get: ruby-app-repo
-      - task: run-dagger-pipeline
+      - task: run-dagger-inside-dind
+        privileged: true  # DinD için şart
         config:
           platform: linux
           image_resource:
             type: registry-image
             source:
-              repository: python
-              tag: "3.10"
+              repository: docker
+              tag: dind
           inputs:
             - name: ruby-app-repo
           run:
-            path: sh
+            path: /bin/sh
             args:
               - -exc
               - |
+                dockerd-entrypoint.sh &
+
+                echo "🐳 Docker daemon başlatıldı. Bekleniyor..."
+                while(! docker info > /dev/null 2>&1); do sleep 1; done
+
+                echo "✅ Docker hazır!"
+                apk add --no-cache python3 py3-pip curl
                 pip install dagger-io
                 cd ruby-app-repo/ruby-app-repo
-                python dagger_build.py
+                python3 dagger_build.py

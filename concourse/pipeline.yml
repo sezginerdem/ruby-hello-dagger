@@ -1,0 +1,30 @@
+resources:
+  - name: ruby-hello-dagger
+    type: git
+    source:
+      uri: https://github.com/sezginerdem/ruby-hello-dagger.git
+      branch: main
+      git_config:
+        - name: safe.directory
+          value: /tmp/build/get
+
+jobs:
+  - name: dagger-build
+    plan:
+      - get: my-repo
+      - task: dagger-task
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: {repository: python, tag: "3.11"}
+          inputs:
+            - name: my-repo
+          run:
+            path: sh
+            args:
+              - -exc
+              - |
+                cd ruby-hello-dagger
+                pip install dagger-io==0.18.3
+                python dagger/dagger_build.py
