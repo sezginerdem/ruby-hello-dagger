@@ -4,9 +4,6 @@ resources:
     source:
       uri: https://github.com/sezginerdem/ruby-hello-dagger.git
       branch: main
-      git_config:
-        - name: safe.directory
-          value: /tmp/build/get
 
 jobs:
   - name: dagger-build
@@ -17,14 +14,10 @@ jobs:
           platform: linux
           image_resource:
             type: registry-image
-            source: {repository: golang, tag: "1.21"}
+            source:
+              repository: golang
+              tag: "1.21"
           inputs:
             - name: ruby-hello-dagger
           run:
-            path: sh
-            args:
-              - -exc
-              - |
-                cd ruby-hello-dagger/go-dagger-houdini
-                go mod tidy
-                go run main.go
+            path: ruby-hello-dagger/concourse/task-scripts/dagger-task.sh
