@@ -1,13 +1,13 @@
-resource_types:
-  - name: registry-image
-    type: registry-image
+resources:
+  - name: ruby-app-repo
+    type: git
     source:
-      repository: concourse/registry-image-resource
-
+      uri: https://github.com/sezginerdem/ruby-hello-dagger.git
 jobs:
   - name: build-and-run-dagger
     public: true
     plan:
+      - get: ruby-app-repo
       - task: run-dagger-pipeline
         config:
           platform: linux
@@ -24,5 +24,5 @@ jobs:
               - -exc
               - |
                 pip install dagger-io
-                cd ruby-app-repo
+                cd ruby-app-repo/ruby-app-repo
                 python dagger_build.py
