@@ -9,6 +9,7 @@ python3 -m pip install --upgrade pip
 
 echo "🐍 Installing latest Dagger Python SDK (Houdini compatible)"
 pip install dagger
+pip install anyio httpx gql beartype
 
 echo "🔧 Installing Dagger CLI (optional but helpful)"
 mkdir -p /tmp/dagger-bin
