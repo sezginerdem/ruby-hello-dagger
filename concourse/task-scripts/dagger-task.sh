@@ -7,8 +7,8 @@ apt-get update -qq && apt-get install -yqq curl gcc python3-dev build-essential 
 echo "🐍 Ensuring latest pip version..."
 python3 -m pip install --upgrade pip
 
-echo "🐍 Installing Dagger SDK (Houdini compatible, pip install dagger)"
-pip install "anyio>=3.6.2" "httpx>=0.22.0" "gql==3.5.2" "beartype==0.10.4" dagger
+echo "🐍 Installing Dagger Python SDK from GitHub"
+pip install git+https://github.com/dagger/dagger.git#subdirectory=sdk/python
 
 echo "🔧 Installing Dagger CLI (optional but helpful)"
 mkdir -p /tmp/dagger-bin
