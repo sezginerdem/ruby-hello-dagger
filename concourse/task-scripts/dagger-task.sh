@@ -8,7 +8,7 @@ echo "🐍 Ensuring latest pip version..."
 python3 -m pip install --upgrade pip
 
 echo "🐍 Installing latest Dagger Python SDK (Houdini compatible)"
-pip install dagger-io==0.18.4
+pip install dagger
 
 echo "🔧 Installing Dagger CLI (optional but helpful)"
 mkdir -p /tmp/dagger-bin
