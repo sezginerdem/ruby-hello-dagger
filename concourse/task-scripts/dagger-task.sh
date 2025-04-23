@@ -3,14 +3,13 @@ set -e
 
 echo "🔧 Installing Dagger CLI..."
 mkdir -p /tmp/dagger-bin
-cd /tmp/dagger-bin
-curl -L https://dl.dagger.io/dagger/releases/0.8.7/dagger_v0.8.7_linux_arm64.tar.gz | tar -xz
-chmod +x dagger
+curl -L https://dl.dagger.io/dagger/releases/0.8.7/dagger_v0.8.7_linux_arm64.tar.gz | tar -xz -C /tmp/dagger-bin
+chmod +x /tmp/dagger-bin/dagger
 
 export PATH="/tmp/dagger-bin:$PATH"
 export DAGGER_ENGINE=houdini
 
-echo "📂 Current directory: $(pwd)"
+echo "📂 Switching to mounted source folder: ruby-hello-dagger"
 cd ruby-hello-dagger
 
 echo "🐍 Installing Python dependencies"
