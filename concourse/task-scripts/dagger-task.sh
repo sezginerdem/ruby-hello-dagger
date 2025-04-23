@@ -11,9 +11,8 @@ export PATH="/tmp/dagger-bin:$PATH"
 export DAGGER_ENGINE=houdini
 
 echo "📂 Current directory: $(pwd)"
-ls -al
 
-cd ../ruby-hello-dagger/dagger
+cd /tmp/build/$(ls /tmp/build)/*/ruby-hello-dagger/dagger
 
 echo "📦 Initializing Go module"
 go mod init example.com/dagger-task || true
