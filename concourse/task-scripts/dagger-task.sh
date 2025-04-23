@@ -12,13 +12,13 @@ export DAGGER_ENGINE=houdini
 
 echo "📂 Current directory: $(pwd)"
 
-# Dagger projesinin olduğu dizine geçiş
-cd $(find /tmp/build -type d -path "*/ruby-hello-dagger/dagger")
+cd /tmp/build/$(ls /tmp/build)/*/ruby-hello-dagger
 
-echo "📦 Initializing Go module"
-go mod init example.com/dagger-task || true
-go get dagger.io/dagger@v0.8.7
-go mod tidy
+echo "🐍 Setting up Python environment"
+python3 -m venv venv
+. venv/bin/activate
+pip install --upgrade pip
+pip install dagger-io==0.18.3
 
-echo "🚀 Running Go + Dagger with Houdini"
-DAGGER_ENGINE=houdini /tmp/dagger-bin/dagger run go run main.go
+echo "🚀 Running Python + Dagger with Houdini"
+DAGGER_ENGINE=houdini python dagger/dagger_build.py
