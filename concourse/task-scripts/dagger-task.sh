@@ -8,7 +8,9 @@ export PATH="$HOME/.dagger/bin:$PATH"
 export DAGGER_ENGINE=houdini
 
 echo "📦 Initializing Go module"
-cd dagger
+echo "📂 Current directory: $(pwd)"
+ls -la
+cd ruby-hello-dagger/dagger
 go mod init example.com/dagger-task || true
 go get dagger.io/dagger@v0.8.7
 go mod tidy
