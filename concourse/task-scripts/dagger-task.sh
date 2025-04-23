@@ -2,14 +2,15 @@
 set -e
 
 echo "🔧 Installing Dagger CLI..."
+mkdir -p ./bin
 curl -L https://dl.dagger.io/dagger/install.sh | DAGGER_VERSION=0.8.7 sh
 
 echo "📂 Kurulumdan sonra bulunduğun dizin: $(pwd)"
 echo "🔍 Binary’yi ara:"
 find . -name dagger -type f
 
-# Dagger binary kurulduysa PATH’e ekle
-export PATH="$(pwd)/.dagger/bin:$PATH"
+# Dagger binary'nin bulunduğu yeri PATH'e ekle
+export PATH="$(pwd)/bin:$PATH"
 
 cd ruby-hello-dagger/dagger
 
