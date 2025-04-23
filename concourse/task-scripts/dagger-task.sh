@@ -20,4 +20,4 @@ go get dagger.io/dagger@v0.8.7
 go mod tidy
 
 echo "🚀 Running Go + Dagger with Houdini"
-env DAGGER_ENGINE=houdini dagger run go run main.go
+./bin/dagger --engine=houdini run go run main.go
