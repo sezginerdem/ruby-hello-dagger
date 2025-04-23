@@ -12,7 +12,8 @@ export DAGGER_ENGINE=houdini
 
 echo "📂 Current directory: $(pwd)"
 
-cd /tmp/build/$(ls /tmp/build)/*/ruby-hello-dagger/dagger
+# Dagger projesinin olduğu dizine geçiş
+cd $(find /tmp/build -type d -path "*/ruby-hello-dagger/dagger")
 
 echo "📦 Initializing Go module"
 go mod init example.com/dagger-task || true
