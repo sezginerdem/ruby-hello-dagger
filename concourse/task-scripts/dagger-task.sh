@@ -12,7 +12,10 @@ export DAGGER_ENGINE=houdini
 
 echo "📂 Current directory: $(pwd)"
 
-cd /tmp/build/ruby-hello-dagger
+echo "🔍 Finding ruby-hello-dagger repo"
+REPO_DIR=$(find /tmp/build -type d -name ruby-hello-dagger | head -n 1)
+echo "📂 Switching to: $REPO_DIR"
+cd "$REPO_DIR"
 
 echo "🐍 Setting up Python environment"
 python3 -m venv venv
