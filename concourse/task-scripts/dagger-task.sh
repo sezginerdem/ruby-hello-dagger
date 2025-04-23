@@ -8,7 +8,10 @@ echo "🐍 Ensuring latest pip version..."
 python3 -m pip install --upgrade pip
 
 echo "🐍 Installing Dagger Python SDK from GitHub"
-pip install git+https://github.com/dagger/dagger.git#subdirectory=sdk/python
+pip install 'dagger-io==0.5.4'  # en stabil sürüm (Houdini uyumlu)
+
+echo "🐍 Python version check:"
+python3 --version
 
 echo "🔧 Installing Dagger CLI (optional but helpful)"
 mkdir -p /tmp/dagger-bin
