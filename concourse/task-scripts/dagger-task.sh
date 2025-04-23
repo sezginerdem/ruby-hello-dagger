@@ -11,17 +11,11 @@ export PATH="/tmp/dagger-bin:$PATH"
 export DAGGER_ENGINE=houdini
 
 echo "📂 Current directory: $(pwd)"
+cd ruby-hello-dagger
 
-echo "🔍 Finding ruby-hello-dagger repo"
-REPO_DIR=$(find /tmp/build -type d -name ruby-hello-dagger | head -n 1)
-echo "📂 Switching to: $REPO_DIR"
-cd "$REPO_DIR"
-
-echo "🐍 Setting up Python environment"
-python3 -m venv venv
-. venv/bin/activate
+echo "🐍 Installing Python dependencies"
 pip install --upgrade pip
 pip install dagger-io==0.18.3
 
 echo "🚀 Running Python + Dagger with Houdini"
-DAGGER_ENGINE=houdini python dagger/dagger_build.py
+DAGGER_ENGINE=houdini python3 dagger/dagger_build.py
