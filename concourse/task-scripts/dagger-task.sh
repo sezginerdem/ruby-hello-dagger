@@ -6,7 +6,6 @@ mkdir -p ./bin
 curl -L https://dl.dagger.io/dagger/install.sh | DAGGER_VERSION=0.8.7 sh
 
 export PATH="$(pwd)/bin:$PATH"
-export DAGGER_ENGINE=houdini
 
 echo "📂 Current directory: $(pwd)"
 ls -la
@@ -19,4 +18,4 @@ go get dagger.io/dagger@v0.8.7
 go mod tidy
 
 echo "🚀 Running Go + Dagger with Houdini"
-dagger run go run main.go
+env DAGGER_ENGINE=houdini ./bin/dagger run go run main.go
