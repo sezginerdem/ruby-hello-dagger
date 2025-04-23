@@ -19,7 +19,7 @@ jobs:
           type: registry-image
           source:
             repository: python
-            tag: "3.11-bullseye"
+            tag: "3.11"
           inputs:
             - name: ruby-hello-dagger
           run:
