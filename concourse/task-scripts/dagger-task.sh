@@ -12,7 +12,7 @@ export DAGGER_ENGINE=houdini
 
 echo "📂 Current directory: $(pwd)"
 
-cd /tmp/build/$(ls /tmp/build)/*/ruby-hello-dagger
+cd /tmp/build/ruby-hello-dagger
 
 echo "🐍 Setting up Python environment"
 python3 -m venv venv
