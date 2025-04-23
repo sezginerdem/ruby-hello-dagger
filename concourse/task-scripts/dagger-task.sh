@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+echo "🔧 Installing system dependencies..."
+apt-get update && apt-get install -y python3-pip
+
 echo "🔧 Installing Dagger CLI..."
 mkdir -p /tmp/dagger-bin
 curl -L https://dl.dagger.io/dagger/releases/0.8.7/dagger_v0.8.7_linux_arm64.tar.gz | tar -xz -C /tmp/dagger-bin
@@ -13,8 +16,8 @@ echo "📂 Switching to mounted source folder: ruby-hello-dagger"
 cd ruby-hello-dagger
 
 echo "🐍 Installing Python dependencies"
-pip install --upgrade pip
-pip install dagger-io==0.18.3
+pip3 install --upgrade pip
+pip3 install dagger-io==0.18.3
 
 echo "🚀 Running Python + Dagger with Houdini"
 DAGGER_ENGINE=houdini python3 dagger/dagger_build.py
