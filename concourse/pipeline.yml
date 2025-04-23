@@ -2,19 +2,24 @@ resources:
   - name: ruby-hello-dagger
     type: git
     source:
-      uri: file:///Users/sezginerdem/Development/ruby-hello-dagger
+      uri: https://github.com/sezginerdem/ruby-hello-dagger.git
       branch: main
+      git_config:
+        - name: safe.directory
+          value: /tmp/build/get
+
 jobs:
   - name: dagger-build
     plan:
+      - get: ruby-hello-dagger
       - task: dagger-task
         config:
           platform: linux
           image_resource:
-            type: registry-image
-            source:
-              repository: python
-              tag: "3.11-bullseye"
+          type: registry-image
+          source:
+            repository: python
+            tag: "3.11-bullseye"
           inputs:
             - name: ruby-hello-dagger
           run:
