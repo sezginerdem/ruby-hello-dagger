@@ -2,18 +2,19 @@ import dagger
 import asyncio
 
 async def main():
-    # Houdini motoru ile bağlantı kur
+    # Dagger istemcisine bağlan
     async with dagger.Connection(dagger.Config(log_output=sys.stderr)) as client:
-        # Basit bir build örneği (örnek olarak bir 'alpine' konteyneri çalıştırıyoruz)
-        ctr = (
+        # Dagger ortamında basit bir işlem: Python container'ı oluştur ve bir komut çalıştır
+        python_container = (
             client.container()
-            .from_("alpine")
-            .with_exec(["echo", "✅ Dagger Houdini Python ile çalıştı!"])
+            .from_("python:3.11-slim")
+            .with_exec(["python", "-c", "print('Merhaba Dagger! 🎯')"])
         )
 
-        output = await ctr.stdout()
-        print("📦 Çıktı:", output)
+        # Çıktıyı al ve yazdır
+        output = await python_container.stdout()
+        print("🖨️ Çıktı:")
+        print(output)
 
 if __name__ == "__main__":
-    import sys
     asyncio.run(main())
