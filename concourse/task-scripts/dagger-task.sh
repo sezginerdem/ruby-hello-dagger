@@ -2,22 +2,14 @@
 set -e
 
 echo "🔧 Installing Dagger CLI..."
-mkdir -p ./bin
-curl -L https://dl.dagger.io/dagger/install.sh | DAGGER_VERSION=0.8.7 sh
+curl -L https://dl.dagger.io/dagger/releases/0.8.7/dagger_v0.8.7_linux_arm64.tar.gz | tar -xz -C /tmp
+chmod +x /tmp/dagger
 
-echo "📂 Kurulumdan sonra bulunduğun dizin: $(pwd)"
-echo "🔍 Binary’yi ara:"
-find . -name dagger -type f
+echo "📂 Current directory: $(pwd)"
 
-# Dagger binary'nin bulunduğu yeri PATH'e ekle
-export PATH="$(pwd)/bin:$PATH"
-
+echo "📦 Initializing Go module"
 cd ruby-hello-dagger/dagger
-
-echo "📦 Go modülünü kur"
-go mod init example.com/dagger-task || true
-go get dagger.io/dagger@v0.8.7
 go mod tidy
 
 echo "🚀 Running Go + Dagger with Houdini"
-./bin/dagger --engine=houdini run go run main.go
+/tmp/dagger --engine=houdini run go run main.go
