@@ -11,6 +11,7 @@ export PATH="/tmp/dagger-bin:$PATH"
 export DAGGER_ENGINE=houdini
 
 echo "📂 Current directory: $(pwd)"
+ls -al
 
 cd ../ruby-hello-dagger/dagger
 
