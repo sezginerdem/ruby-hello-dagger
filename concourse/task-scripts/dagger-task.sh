@@ -12,7 +12,7 @@ export DAGGER_ENGINE=houdini
 
 echo "📂 Current directory: $(pwd)"
 
-cd ruby-hello-dagger/dagger
+cd ../ruby-hello-dagger/dagger
 
 echo "📦 Initializing Go module"
 go mod init example.com/dagger-task || true
