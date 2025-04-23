@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 
 	"dagger.io/dagger"
 )
@@ -11,22 +10,23 @@ import (
 func main() {
 	ctx := context.Background()
 
-	fmt.Println("🔌 Connecting to Dagger Engine (Houdini)...")
-	client, err := dagger.Connect(ctx, dagger.WithLogOutput(log.Writer()))
+	// Houdini kullanarak bağlantı kur
+	client, err := dagger.Connect(ctx, dagger.WithLogOutput(nil))
 	if err != nil {
-		log.Fatalf("❌ Connection failed: %v", err)
+		fmt.Printf("❌ Connection failed: %v\n", err)
+		return
 	}
 	defer client.Close()
 
-	// Örnek: basit bir alpine container oluştur ve echo çalıştır
-	output, err := client.Container().
+	// Bir container oluştur ve komut çalıştır
+	out, err := client.Container().
 		From("alpine").
-		WithExec([]string{"echo", "Merhaba, Dagger Go!"}).
+		WithExec([]string{"echo", "Hello from Dagger + Houdini!"}).
 		Stdout(ctx)
 	if err != nil {
-		log.Fatalf("❌ Container execution failed: %v", err)
+		fmt.Printf("❌ Exec failed: %v\n", err)
+		return
 	}
 
-	fmt.Println("✅ Output:")
-	fmt.Println(output)
+	fmt.Println("✅ Output:", out)
 }

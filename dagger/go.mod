@@ -1,5 +1,5 @@
-module dagger-concourse-demo
+module example.com/dagger-task
 
 go 1.21
 
-require dagger.io/dagger v0.8.5
+require dagger.io/dagger v0.8.7
